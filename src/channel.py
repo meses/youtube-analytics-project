@@ -13,13 +13,14 @@ class Channel:
     """Класс для ютуб-канала"""
     @classmethod
     def get_service(cls):
-        api_key: str = 'AIzaSyCETEaeHEexDGGaWpgJaGe2-9n1FzBqe78'
+        """Создаёт специальный объект для работы с API youtube"""
+        # Компьютер корпоративный. Из-за особенностей политик безопасности я не могу установить ключ в переменную среды своего пользователя
+        # Поэтому ключ вставляю в код просто строкой
+        api_key: str = '*******'
         youtube = build('youtube', 'v3', developerKey=api_key)
         return youtube
     # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
-    # Компьютер корпоративный. Из-за особенностей политик безопасности я не могу установить ключ в переменную среды своего пользователя
-    # Поэтому ключ вставляю в код просто строкой
-    #api_key: str = 'AIzaSyCETEaeHEexDGGaWpgJaGe2-9n1FzBqe78'
+    #api_key: str = '*******'
 
     # создать специальный объект для работы с API
     #youtube = build('youtube', 'v3', developerKey=api_key)
@@ -43,6 +44,7 @@ class Channel:
         printj(channel)
 
     def to_json(self, file_name):
+        """Записывает в файл информацию об аттрибутах канала"""
         _path = '../homework-2/' + file_name
         with open(_path, 'w', encoding='UTF-8') as file:
             file.write(f'id канала: {self.id_channel}\n'
@@ -53,3 +55,28 @@ class Channel:
                        f'Количество подписчиков: {self.subscribers_count}\n'
                        f'Общее количество просмотров: {self.view_count}')
 
+    def __str__(self):
+        """Выводит в консоль информацию об экземпляре класса"""
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        """Выводит в консоль результат сложения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        if isinstance(other, Channel):
+            return int(self.view_count) + int(other.view_count)
+        elif isinstance(other, int):
+            return int(self.view_count) + int(other)
+        else:
+            return NotImplemented
+
+    def __sub__(self, other):
+        """Выводит в консоль результат вычитания одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        if isinstance(other, Channel):
+            return int(self.view_count) - int(other.view_count)
+        elif isinstance(other, int):
+            return int(self.view_count) - int(other)
+        else:
+            return NotImplemented
+
+    def __ge__(self, other):
+        """Выводит в консоль результат сравнения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        return int(self.view_count) >= int(other.view_count)
