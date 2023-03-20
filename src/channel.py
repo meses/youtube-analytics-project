@@ -80,3 +80,23 @@ class Channel:
     def __ge__(self, other):
         """Выводит в консоль результат сравнения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
         return int(self.view_count) >= int(other.view_count)
+
+    def __le__(self, other):
+        """Выводит в консоль результат сравнения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        return int(self.view_count) <= int(other.view_count)
+
+    def __gt__(self, other):
+        """Выводит в консоль результат сравнения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        return int(self.view_count) > int(other.view_count)
+
+    def __lt__(self, other):
+        """Выводит в консоль результат сравнения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        return int(self.view_count) < int(other.view_count)
+
+    def __eq__(self, other):
+        """Выводит в консоль результат сравнения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        return int(self.view_count) == int(other.view_count)
+
+    def __ne__(self, other):
+        """Выводит в консоль результат сравнения одного из аттрибутов (количество просмотров) двух экземпляров класса"""
+        return int(self.view_count) != int(other.view_count)
