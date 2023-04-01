@@ -28,10 +28,18 @@ class Video:
     def __init__(self, video_id: str):
         self.__video_id = video_id
         self.video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails', id=self.__video_id).execute()
-        self.video_title = self.video['items'][0]['snippet']['title']
-        self.url = f"https://www.youtube.com/watch?v={self.__video_id}"
-        self.view_count = self.video['items'][0]['statistics']['viewCount']
-        self.like_count = self.video['items'][0]['statistics']['likeCount']
+        try:
+            self.video['items'][0]
+        except IndexError:
+            self.video_title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
+        else:
+            self.video_title = self.video['items'][0]['snippet']['title']
+            self.url = f"https://www.youtube.com/watch?v={self.__video_id}"
+            self.view_count = self.video['items'][0]['statistics']['viewCount']
+            self.like_count = self.video['items'][0]['statistics']['likeCount']
 
     def print_video_info(self):
         """Выводит в консоль информацию о канале."""
